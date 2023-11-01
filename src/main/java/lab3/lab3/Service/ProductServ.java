@@ -53,7 +53,7 @@ public class ProductServ {
         productRepo.deleteById(id);
     }
 
-    public List<Product> findByPriceGreaterThen(double minPrice) {
+    public List<Product> findByPriceGreaterThan(double minPrice) {
         return productRepo.findByPriceGreaterThan(minPrice);
     }
 
@@ -61,7 +61,7 @@ public class ProductServ {
         return productRepo.findByCatagoryAndPriceLessThan(cat, maxPrice);
     }
 
-    List<Product> findByNameContaining(String name) {
+    public List<Product> findByNameContaining(String name) {
         return productRepo.findByNameContaining(name);
     }
 }

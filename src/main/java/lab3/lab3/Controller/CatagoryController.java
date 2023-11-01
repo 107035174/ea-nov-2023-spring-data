@@ -15,37 +15,37 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import lab3.lab3.Model.Address;
-import lab3.lab3.Service.AddressServ;
+import lab3.lab3.Model.Catagory;
+import lab3.lab3.Service.CatagoryServ;
 
 @RestController
-@RequestMapping("/addresses")
-public class AddressController {
+@RequestMapping("/catagories")
+public class CatagoryController {
     @Autowired
-    private AddressServ addressServ;
+    private CatagoryServ catagoryServ;
 
     @PostMapping("/")
-    public ResponseEntity<Address> create(@RequestBody Address address) {
-        Address created = addressServ.save(address);
+    public ResponseEntity<Catagory> create(@RequestBody Catagory catagory) {
+        Catagory created = catagoryServ.save(catagory);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Address> get(@PathVariable Long id) {
-        Optional<Address> address = addressServ.findById(id);
-        return address.map(data -> new ResponseEntity<>(data, HttpStatus.OK))
+    public ResponseEntity<Catagory> get(@PathVariable Long id) {
+        Optional<Catagory> catagory = catagoryServ.findById(id);
+        return catagory.map(data -> new ResponseEntity<>(data, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("/")
-    public List<Address> get() {
-        return addressServ.findAll();
+    public List<Catagory> get() {
+        return catagoryServ.findAll();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Address> edit(@PathVariable Long id, @RequestBody Address address) {
+    public ResponseEntity<Catagory> edit(@PathVariable Long id, @RequestBody Catagory catagory) {
         try {
-            Address updated = addressServ.update(id, address);
+            Catagory updated = catagoryServ.update(id, catagory);
             return new ResponseEntity<>(updated, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -55,7 +55,7 @@ public class AddressController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> remove(@PathVariable Long id) {
         try {
-            addressServ.deleteById(id);
+            catagoryServ.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

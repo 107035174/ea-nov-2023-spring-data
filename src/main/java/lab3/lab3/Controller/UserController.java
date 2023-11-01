@@ -15,37 +15,37 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import lab3.lab3.Model.Address;
-import lab3.lab3.Service.AddressServ;
+import lab3.lab3.Model.User;
+import lab3.lab3.Service.UserServ;
 
 @RestController
-@RequestMapping("/addresses")
-public class AddressController {
+@RequestMapping("/users")
+public class UserController {
     @Autowired
-    private AddressServ addressServ;
+    private UserServ userServ;
 
     @PostMapping("/")
-    public ResponseEntity<Address> create(@RequestBody Address address) {
-        Address created = addressServ.save(address);
+    public ResponseEntity<User> create(@RequestBody User user) {
+        User created = userServ.save(user);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Address> get(@PathVariable Long id) {
-        Optional<Address> address = addressServ.findById(id);
-        return address.map(data -> new ResponseEntity<>(data, HttpStatus.OK))
+    public ResponseEntity<User> get(@PathVariable Long id) {
+        Optional<User> user = userServ.findById(id);
+        return user.map(data -> new ResponseEntity<>(data, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("/")
-    public List<Address> get() {
-        return addressServ.findAll();
+    public List<User> get() {
+        return userServ.findAll();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Address> edit(@PathVariable Long id, @RequestBody Address address) {
+    public ResponseEntity<User> edit(@PathVariable Long id, @RequestBody User user) {
         try {
-            Address updated = addressServ.update(id, address);
+            User updated = userServ.update(id, user);
             return new ResponseEntity<>(updated, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -55,10 +55,11 @@ public class AddressController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> remove(@PathVariable Long id) {
         try {
-            addressServ.deleteById(id);
+            userServ.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
 }
